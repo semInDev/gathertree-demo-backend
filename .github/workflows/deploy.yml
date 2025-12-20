@@ -40,6 +40,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             pkill -f 'demo-backend' || true
-            nohup java -jar /home/ec2-user/${{ secrets.APP_NAME }} \
+            setsid nohup java -jar /home/ec2-user/${{ secrets.APP_NAME }} \
               --spring.profiles.active=prod \
-              > app.log 2>&1 &
+              > app.log 2>&1 < /dev/null &
+            exit 0
