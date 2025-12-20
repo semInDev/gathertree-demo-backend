@@ -24,23 +24,32 @@ jobs:
         run: ./gradlew clean build
 
       - name: Copy jar to EC2
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          source: build/libs/${{ secrets.APP_NAME }}
-          target: /home/ec2-user/
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+
+          scp -o StrictHostKeyChecking=no \
+            -i key.pem \
+            build/libs/demo-backend-0.0.1-SNAPSHOT.jar \
+            ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ec2-user/
+
+          rm -f key.pem
 
       - name: Restart app on EC2
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            pkill -f 'demo-backend' || true
-            setsid nohup java -jar /home/ec2-user/${{ secrets.APP_NAME }} \
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+
+          ssh -o StrictHostKeyChecking=no \
+              -i key.pem \
+              ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            # 기존 프로세스 종료 (정확한 JAR만)
+            pkill -f demo-backend-0.0.1-SNAPSHOT.jar || true
+
+            # 새 버전 실행
+            nohup java -jar /home/ec2-user/demo-backend-0.0.1-SNAPSHOT.jar \
               --spring.profiles.active=prod \
-              > app.log 2>&1 < /dev/null &
-            exit 0
+              > app.log 2>&1 &
+          EOF
+
+          rm -f key.pem
