@@ -31,7 +31,7 @@ public enum ErrorStatus {
 
     // ===== AI Evaluation =====
     EVALUATION_NOT_ALLOWED(HttpStatus.BAD_REQUEST, "AI_4000",
-            "장식이 5개 이상일 때만 평가할 수 있습니다."),
+            "장식이 10개 모두 모였을 때만 평가할 수 있습니다."),
     AI_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "AI_5000",
             "AI 평가 중 오류가 발생했습니다.");
 

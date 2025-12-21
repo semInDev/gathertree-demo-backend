@@ -1,3 +1,5 @@
+# application-prod.yml
+
 spring:
   data:
     redis:
@@ -15,3 +17,7 @@ cloud:
 logging:
   level:
     root: info
+
+openai:
+  api-key: ${OPENAI_API_KEY}
+  model: gpt-4o

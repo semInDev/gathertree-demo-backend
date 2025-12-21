@@ -305,4 +305,9 @@ public class TreeService {
         saveToRedis(tree);
     }
 
+    // Tree 엔티티 반환 메서드
+    public Tree getTreeEntity(String uuid) {
+        return getTreeFromRedis(uuid);
+    }
+
 }
