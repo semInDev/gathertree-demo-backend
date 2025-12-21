@@ -29,7 +29,11 @@ public class SwaggerConfig {
                         - TTL 24시간
                         """)
                         .version("v1")
-                );
+                )
+                .servers(List.of(
+                        new Server().url("/")
+                ));
+
 /*                .servers(List.of(
                         // ✅ 지금은 로컬만
                         new Server()
