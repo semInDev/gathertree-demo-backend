@@ -29,8 +29,8 @@ public class SwaggerConfig {
                         - TTL 24시간
                         """)
                         .version("v1")
-                )
-                .servers(List.of(
+                );
+/*                .servers(List.of(
                         // ✅ 지금은 로컬만
                         new Server()
                                 .url("http://localhost:8080")
@@ -39,6 +39,6 @@ public class SwaggerConfig {
                         new Server()
                                 .url("https://api.beour.store")
                                 .description("Production")
-                ));
+                ));*/
     }
 }
