@@ -48,7 +48,7 @@ public class TreeService {
             byte[] imageBytes = Base64ImageUtil.decode(request.getImageBase64());
 
             // 2. S3 업로드
-            String imageUrl = s3ImageService.upload(
+            String imageUrl = s3ImageService.uploadNew(
                     imageBytes,
                     "trees/" + uuid + "/base.png"
             );
@@ -69,7 +69,8 @@ public class TreeService {
         } catch (Exception e) {
             throw new GeneralException(
                     ErrorStatus.INTERNAL_SERVER_ERROR,
-                    "트리 생성 중 오류가 발생했습니다."
+                    "트리 생성 중 오류가 발생했습니다.",
+                    e
             );
         }
     }
@@ -108,6 +109,39 @@ public class TreeService {
     }
 
     /* =========================
+       트리 수정 (base.png overwrite)
+       ========================= */
+    public void updateTree(String uuid, TreeCreateRequest request) {
+        Tree tree = getTreeFromRedis(uuid);
+
+        try {
+            // 1. base64 → png
+            byte[] imageBytes = Base64ImageUtil.decode(request.getImageBase64());
+
+            // 2. S3 overwrite (정책 명확)
+            String imageUrl = s3ImageService.overwrite(
+                    imageBytes,
+                    "trees/" + uuid + "/base.png"
+            );
+
+            // 3. 상태 변경
+            tree.changeBaseImageUrl(imageUrl);
+            tree.touch();
+
+            saveToRedis(tree);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+            throw new GeneralException(
+                    ErrorStatus.INTERNAL_SERVER_ERROR,
+                    "트리 수정 중 오류가 발생했습니다.",
+                    e
+            );
+        }
+    }
+
+    /* =========================
        장식 추가
        ========================= */
     public DecorationCreateResponse addDecoration(
@@ -125,7 +159,7 @@ public class TreeService {
 
             // 1. 이미지 업로드
             byte[] imageBytes = Base64ImageUtil.decode(request.getImageBase64());
-            String imageUrl = s3ImageService.upload(
+            String imageUrl = s3ImageService.uploadNew(
                     imageBytes,
                     "trees/" + uuid + "/decorations/" + decorationId + ".png"
             );

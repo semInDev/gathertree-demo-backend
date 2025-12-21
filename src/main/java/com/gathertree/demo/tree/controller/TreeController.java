@@ -86,6 +86,24 @@ public class TreeController {
     }
 
     @Operation(
+            summary = "트리 수정",
+            description = """
+        트리 주인이 트리 베이스 이미지를 수정합니다.
+        
+        - 기존 장식은 유지됩니다.
+        - base.png 파일만 덮어씁니다.
+        """
+    )
+    @PutMapping("/{uuid}")
+    public ApiResult<Void> updateTree(
+            @PathVariable String uuid,
+            @Valid @RequestBody TreeCreateRequest request
+    ) {
+        treeService.updateTree(uuid, request);
+        return ApiResult.onSuccess(null);
+    }
+
+    @Operation(
             summary = "장식 추가",
             description = """
         친구가 트리에 장식을 추가합니다.
