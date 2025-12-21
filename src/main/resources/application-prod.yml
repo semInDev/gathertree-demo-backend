@@ -1,0 +1,17 @@
+spring:
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+cloud:
+  aws:
+    s3:
+      bucket: gathertree-assets
+      public-url: https://cdn.beour.store
+    region:
+      static: ap-northeast-2
+
+logging:
+  level:
+    root: info
