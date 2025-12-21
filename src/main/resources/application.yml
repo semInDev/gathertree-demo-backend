@@ -3,15 +3,11 @@ spring:
     name: gathertree-demo-backend
 
   profiles:
-    active: local # TODO: 배포 시 prod로 변경
-
-  jackson:
-    serialization:
-      write-dates-as-timestamps: false
+    active: local
 
 server:
   port: 8080
 
 gathertree:
   redis:
-    tree-ttl-seconds: 86400 # 24h
+    tree-ttl-seconds: 86400
