@@ -20,4 +20,22 @@ public class GeneralException extends RuntimeException {
         this.errorStatus = errorStatus;
         this.data = data;
     }
+
+    /**
+     * ⭐ cause 포함 (가장 중요)
+     */
+    public GeneralException(ErrorStatus errorStatus, Object data, Throwable cause) {
+        super(errorStatus.getMessage(), cause);
+        this.errorStatus = errorStatus;
+        this.data = data;
+    }
+
+    /**
+     * ⭐ cause만 포함
+     */
+    public GeneralException(ErrorStatus errorStatus, Throwable cause) {
+        super(errorStatus.getMessage(), cause);
+        this.errorStatus = errorStatus;
+        this.data = null;
+    }
 }

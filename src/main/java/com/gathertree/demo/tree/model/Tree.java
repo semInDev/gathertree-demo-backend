@@ -17,8 +17,11 @@ public class Tree {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // updatedAt 수정
     public void touch() {
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void changeBaseImageUrl(String baseImageUrl) {
+        this.baseImageUrl = baseImageUrl;
     }
 }

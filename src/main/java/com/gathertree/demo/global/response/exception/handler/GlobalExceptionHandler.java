@@ -17,11 +17,20 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(GeneralException.class)
     public ResponseEntity<ApiResult<Object>> handleGeneralException(GeneralException ex) {
-        log.error("ErrorCode={}, message={}",
-                ex.getErrorStatus().getCode(),
-                ex.getErrorStatus().getMessage(),
-                ex
-        );
+        if (ex.getCause() != null) {
+            log.error(
+                    "ErrorCode={}, message={}",
+                    ex.getErrorStatus().getCode(),
+                    ex.getMessage(),
+                    ex.getCause()   // 👈 원인 출력
+            );
+        } else {
+            log.error(
+                    "ErrorCode={}, message={}",
+                    ex.getErrorStatus().getCode(),
+                    ex.getMessage()
+            );
+        }
 
         return ResponseEntity
                 .status(ex.getErrorStatus().getHttpStatus())

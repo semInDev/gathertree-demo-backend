@@ -13,7 +13,8 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOrigins(
                         "http://localhost:5173",   // 프론트 로컬 (Vite)
                         "http://localhost:8080",   // Swagger 로컬
-                        "https://beour.store"      // 프론트 운영
+                        "https://beour.store",      // 프론트 운영
+                        "https://api.beour.store"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")

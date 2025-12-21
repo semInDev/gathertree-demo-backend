@@ -21,19 +21,24 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("🎄 GatherTree API")
-                        .description("GatherTree 크리스마스 이벤트 백엔드 API 명세")
+                        .description("""
+                        🎄 GatherTree 크리스마스 이벤트 API 명세
+
+                        - 인증 없음 (UUID = 권한)
+                        - Redis + S3 기반
+                        - TTL 24시간
+                        """)
                         .version("v1")
                 )
                 .servers(List.of(
                         // ✅ 지금은 로컬만
                         new Server()
                                 .url("http://localhost:8080")
-                                .description("Local server")
-
-                        // 🚫 인프라 구성 전이므로 제거
-                        // new Server()
-                        //        .url("https://api.beour.store")
-                        //        .description("Production server")
+                                .description("Local server"),
+                        // ✅ 인프라 구성 완
+                        new Server()
+                                .url("https://api.beour.store")
+                                .description("Production")
                 ));
     }
 }
