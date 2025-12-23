@@ -17,6 +17,9 @@ repositories {
 	mavenCentral()
 }
 
+/**
+ * AWS SDK BOM
+ */
 dependencyManagement {
 	imports {
 		mavenBom "software.amazon.awssdk:bom:2.25.60"
@@ -24,33 +27,32 @@ dependencyManagement {
 }
 
 dependencies {
-	// 🌱 Spring Boot Core
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// 🌱 Spring Boot Core (logging 제외!)
+	implementation('org.springframework.boot:spring-boot-starter-web') {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+	// ✅ 우리가 직접 logging 지정
+	implementation 'org.slf4j:slf4j-api:2.0.13'
+	implementation 'ch.qos.logback:logback-classic:1.4.14'
+	implementation 'ch.qos.logback:logback-core:1.4.14'
+
 	// Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 
-	// ✅ AWS SDK
+	// AWS SDK
 	implementation 'software.amazon.awssdk:s3'
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-	// Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-configurations.all {
-	resolutionStrategy {
-		force 'ch.qos.logback:logback-classic:1.4.14'
-		force 'ch.qos.logback:logback-core:1.4.14'
-	}
 }
