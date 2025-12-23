@@ -13,3 +13,10 @@ server:
 gathertree:
   redis:
     tree-ttl-seconds: 86400
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+        
