@@ -28,4 +28,10 @@ public class TreeEvaluationResponse {
             example = "[\"미술 실력 이전에 이 정도면 됐지라는 태도가 트리 전체를 지배하고 있어.\", \"이 트리는 완성도가 낮아서가 아니라, 서로 맞춰볼 생각 자체가 없어서 이렇게 된 게 더 아프다.\", \"같이 만든 트리라기보단, 우정이 아직 잘 작동하는지 테스트해본 결과물 같아.\", \"같이 만든 트리라기보단 각자 대충 손 얹고 우정은 자동 저장될 거라 믿은 결과 같아.\"]"
     )
     private List<String> comments;
+
+    @Schema(
+            description = "평가 완료 후 public으로 공개된 최종 트리 이미지 URL",
+            example = "https://cdn.beour.store/eval/public/abcd-1234.png"
+    )
+    private String imageUrl;
 }
