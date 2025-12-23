@@ -17,6 +17,12 @@ repositories {
 	mavenCentral()
 }
 
+dependencyManagement {
+	imports {
+		mavenBom "software.amazon.awssdk:bom:2.25.60"
+	}
+}
+
 dependencies {
 	// 🌱 Spring Boot Core
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -27,8 +33,7 @@ dependencies {
 	// Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 
-	// ✅ AWS SDK BOM (중요!)
-	implementation platform('software.amazon.awssdk:bom:2.25.60')
+	// ✅ AWS SDK
 	implementation 'software.amazon.awssdk:s3'
 
 	// Lombok
