@@ -27,18 +27,11 @@ dependencyManagement {
 }
 
 dependencies {
-	// 🌱 Spring Boot Core (logging 제외!)
-	implementation('org.springframework.boot:spring-boot-starter-web') {
-		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-	}
+	// 🌱 Spring Boot Core
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
-	// ✅ 우리가 직접 logging 지정
-	implementation 'org.slf4j:slf4j-api:2.0.13'
-	implementation 'ch.qos.logback:logback-classic:1.4.14'
-	implementation 'ch.qos.logback:logback-core:1.4.14'
 
 	// Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
@@ -51,6 +44,13 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+configurations.all {
+	resolutionStrategy {
+		force 'ch.qos.logback:logback-classic:1.4.14'
+		force 'ch.qos.logback:logback-core:1.4.14'
+	}
 }
 
 tasks.named('test') {
