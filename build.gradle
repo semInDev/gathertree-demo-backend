@@ -6,17 +6,10 @@ plugins {
 
 group = 'com.gathertree'
 version = '0.0.1-SNAPSHOT'
-description = 'Demo backend for GatherTree Christmas event web app'
 
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
 	}
 }
 
@@ -25,28 +18,24 @@ repositories {
 }
 
 dependencies {
-	// Spring Boot 기본
+	// 🌱 Spring Boot Core
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 	// Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 
-	// AWS S3
-	implementation 'software.amazon.awssdk:s3:2.25.60'
-
-	// 로그 (명시적으로 고정)
-	implementation 'org.slf4j:slf4j-api:2.0.16'
-	implementation 'ch.qos.logback:logback-classic:1.5.12'
+	// AWS SDK v2 (❗️버전 제거)
+	implementation 'software.amazon.awssdk:s3'
 
 	// Lombok
-	compileOnly 'org.projectlombok:lombok:1.18.36'
-	annotationProcessor 'org.projectlombok:lombok:1.18.36'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 
+	// Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 tasks.named('test') {
