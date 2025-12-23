@@ -85,7 +85,7 @@ public class AiEvaluationController {
                 aiEvaluationService.evaluate(
                         tree,
                         mode,
-                        request.getImageUrl()
+                        request.getImageKey()
                 )
         );
     }
